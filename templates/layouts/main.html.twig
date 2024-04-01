@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+        {% block title %}
+            وبلاگ
+        {% endblock %}
+    </title>
+    {% include '/layouts/styles.html.twig' %}
+</head>
+<body>
+
+<!-- begin::sidebar -->
+{% include '/layouts/sidebar.html.twig' %}
+<!-- end::sidebar -->
+
+<!-- begin::side menu -->
+{% include '/layouts/side-menu.html.twig' %}
+<!-- end::side menu -->
+
+<!-- begin::navbar -->
+{% include '/layouts/navbar.html.twig' %}
+<!-- end::navbar -->
+
+<!-- begin::main content -->
+<main class="main-content">
+    <div class="container-fluid">
+        {% block content %}
+        {% endblock %}
+    </div>
+</main>
+<!-- end::main content -->
+
+{% include '/layouts/scripts.html.twig' %}
+</body>
+</html>

@@ -1,0 +1,36 @@
+{% extends '/auth/layouts/main.html.twig' %}
+{% block content %}
+    <div class="row align-items-center h-100-vh">
+        <div class="col-lg-6 d-none d-lg-block p-t-b-25">
+            <img class="img-fluid" src="assets/media/svg/login.svg" alt="...">
+        </div>
+        <div class="col-lg-4 offset-lg-1 p-t-b-25">
+            <div class="d-flex align-items-center m-b-20">
+                <img src="assets/media/image/dark-logo.png" class="m-l-15" width="40" alt="">
+                <h3 class="m-0">ورود به حساب</h3>
+            </div>
+            <p>برای ادامه وارد شوید.</p>
+            <form action="#">
+                <div class="form-group mb-4">
+                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1" autofocus
+                           placeholder="ایمیل یا نام کاربری">
+                </div>
+                <div class="form-group mb-4">
+                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1"
+                           placeholder="رمز عبور">
+                </div>
+                <button class="btn btn-primary btn-lg btn-block btn-uppercase mb-4">ورود</button>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheck">
+                        <label class="custom-control-label" for="customCheck">به خاطر سپاری</label>
+                    </div>
+                    <a href="#" class="auth-link text-black">فراموشی رمز عبور؟</a>
+                </div>
+                <div class="text-center">
+                    حسابی ندارید؟ <a href="" class="text-primary">ایجاد</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
