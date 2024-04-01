@@ -1,17 +1,21 @@
 * text=auto eol=lf
 
+*.css linguist-detectable=false
+*.html linguist-detectable=false
+*.js linguist-detectable=false
 *.conf text eol=lf
-*.html text eol=lf
 *.ini text eol=lf
-*.js text eol=lf
 *.json text eol=lf
 *.md text eol=lf
-*.php text eol=lf
+*.php text eol=lf diff=php
 *.sh text eol=lf
 *.yaml text eol=lf
 *.yml text eol=lf
 bin/console text eol=lf
 composer.lock text eol=lf merge=ours
+
+/.github export-ignore
+CHANGELOG.md export-ignore
 
 *.ico binary
 *.png binary
