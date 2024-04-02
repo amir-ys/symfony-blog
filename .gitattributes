@@ -3,6 +3,7 @@
 *.css linguist-detectable=false
 *.html linguist-detectable=false
 *.js linguist-detectable=false
+*.twig linguist-detectable=false
 *.conf text eol=lf
 *.ini text eol=lf
 *.json text eol=lf
