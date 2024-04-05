@@ -16,11 +16,28 @@ class RegistrationController extends AbstractController
     public function register(
         Request                     $request,
         UserPasswordHasherInterface $passwordHasher,
-        EntityManagerInterface      $em,
+        EntityManagerInterface      $entityManager,
     )
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $user->setPassword(
+                $passwordHasher->hashPassword(
+                    $user,
+                    $form->getData()->getPassword()
+                )
+            );
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('موفقیت آمیز', 'کاربر با موفقیت ایجاد شد.');
+            $this->redirectToRoute('dashboard');
+        }
 
         return $this->render('auth/register.html.twig', [
             'form' => $form->createView()
