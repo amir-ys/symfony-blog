@@ -36,7 +36,7 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('موفقیت آمیز', 'کاربر با موفقیت ایجاد شد.');
-            $this->redirectToRoute('dashboard');
+            return $this->redirectToRoute('dashboard');
         }
 
         return $this->render('auth/register.html.twig', [
