@@ -1,0 +1,23 @@
+{% extends '/auth/layouts/main.html.twig' %}
+{% block content %}
+    <div class="row align-items-center h-100-vh">
+        <div class="col-lg-6 d-none d-lg-block p-t-b-25">
+            <img class="img-fluid" src="assets/media/svg/register.svg" alt="...">
+        </div>
+        {{ form_errors(form) }}
+        <div class="col-lg-4 offset-lg-1 p-t-25 p-b-10">
+            <h3>ثبت نام</h3>
+            <p>ایجاد حساب کاربری جدید</p>
+            {{ form(form) }}
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="customSwitch" checked>
+                        <label class="custom-control-label" for="customSwitch">با قوانین و مقررات موافقم.</label>
+                    </div>
+                </div>
+                <p class="text-left">
+                    <a href="#" class="text-underline">حساب کاربری دارید؟</a>
+                </p>
+        </div>
+    </div>
+{% endblock %}
