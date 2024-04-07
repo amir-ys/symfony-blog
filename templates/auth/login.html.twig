@@ -10,26 +10,29 @@
                 <h3 class="m-0">ورود به حساب</h3>
             </div>
             <p>برای ادامه وارد شوید.</p>
-            <form action="#">
-                <div class="form-group mb-4">
-                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1" autofocus
-                           placeholder="ایمیل یا نام کاربری">
+            <form action="{{ path('auth.login') }}" method="post">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+
+                <label for="username">ایمیل</label>
+                <input type="email" name="_username" id="username" class="form-control"
+                       autocomplete="email" required autofocus>
+                <label for="password">رمز عبور</label>
+                <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+
+                <input type="hidden" name="_csrf_token"
+                       value="{{ csrf_token('authenticate') }}"
+                >
+                <div class="checkbox mb-2 mt-md-2">
+                    <label>
+                        <input type="checkbox" name="_remember_me">
+                        مرا فراموش نکن
+                    </label>
                 </div>
-                <div class="form-group mb-4">
-                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1"
-                           placeholder="رمز عبور">
-                </div>
-                <button class="btn btn-primary btn-lg btn-block btn-uppercase mb-4">ورود</button>
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label class="custom-control-label" for="customCheck">به خاطر سپاری</label>
-                    </div>
-                    <a href="#" class="auth-link text-black">فراموشی رمز عبور؟</a>
-                </div>
-                <div class="text-center">
-                    حسابی ندارید؟ <a href="" class="text-primary">ایجاد</a>
-                </div>
+                <button class="btn btn-primary btn-lg btn-block btn-uppercase mb-4" type="submit">
+                     ورود
+                </button>
             </form>
         </div>
     </div>
