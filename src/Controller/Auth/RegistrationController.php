@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Auth;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
@@ -35,8 +35,8 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('موفقیت آمیز', 'کاربر با موفقیت ایجاد شد.');
-            return $this->redirectToRoute('dashboard');
+            $this->addFlash('success', 'کاربر با موفقیت ایجاد شد.');
+            return $this->redirectToRoute('auth.login');
         }
 
         return $this->render('auth/register.html.twig', [
