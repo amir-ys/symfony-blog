@@ -28,7 +28,14 @@
 <!-- begin::main content -->
 <main class="main-content">
     <div class="container-fluid">
+        <div class="page-header">
+           {% include '/layouts/breadcrumb.html.twig' with {
+               'title' :  block('title'),
+               'breadcrumb' :  block('breadcrumb'),
+           } %}
+        </div>
         {% block content %}
+            {% block breadcrumb %}{% endblock %}
         {% endblock %}
     </div>
 </main>
