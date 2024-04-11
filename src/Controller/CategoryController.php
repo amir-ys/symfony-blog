@@ -33,6 +33,7 @@ class CategoryController extends AbstractController
             $entityManager->persist($category);
             $entityManager->flush();
 
+            $this->addFlash('success' , 'دسته بندی با موفقیت ایجاد شد.');
             return $this->redirectToRoute('panel.categories.index');
         }
 

@@ -34,6 +34,7 @@
                'breadcrumb' :  block('breadcrumb'),
            } %}
         </div>
+        {% include '/layouts/flush-message.html.twig' %}
         {% block content %}
             {% block breadcrumb %}{% endblock %}
         {% endblock %}

@@ -1,9 +1,15 @@
-
 <!-- begin::global scripts -->
 <script src="{{ asset('assets/vendors/bundle.js') }}"></script>
 <!-- end::global scripts -->
 
 <!-- begin::custom scripts -->
+<script src="{{ asset('/assets/vendors/jquery/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('assets/js/custom.js') }}"></script>
 <script src="{{ asset('assets/js/app.js') }}"></script>
+
+<script defer>
+    $('#alert-message-element').fadeOut(3500)
+</script>
+
 <!-- end::custom scripts -->
+{% block scripts %}{% endblock %}
