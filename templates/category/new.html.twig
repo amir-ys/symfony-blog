@@ -1,0 +1,31 @@
+{% extends './layouts/main.html.twig' %}
+{% block title %}دسته بندی ها{% endblock %}
+{% block breadcrumb %}
+    <li class="breadcrumb-item active"><a>دسته بندی ها</a></li>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body border border-5">
+                    {{ form_start(form) }}
+                    <div class="row">
+                        <div class="col-md-4">
+                            {{ form_row(form.name) }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ form_row(form.parent_id) }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ form_row(form.description) }}
+                        </div>
+                    </div>
+                    <div class="w-25">
+                        {{ form_row(form.submit) }}
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

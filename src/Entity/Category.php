@@ -5,11 +5,17 @@ namespace App\Entity;
 use App\Repository\CategoryRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ORM\Table(name: 'categories')]
 class Category
 {
+    public function __construct()
+    {
+        $this->setCreatedAt();
+    }
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -33,7 +39,7 @@ class Category
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updated_at = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true, options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeImmutable $created_at = null;
 
     public function getId(): ?int
@@ -60,6 +66,8 @@ class Category
 
     public function setSlug(string $slug): static
     {
+        $slugger = new AsciiSlugger('fa');
+        $slug = $slugger->slug(string: $slug, locale: 'fa');
         $this->slug = $slug;
 
         return $this;
@@ -100,6 +108,7 @@ class Category
 
         return $this;
     }
+
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updated_at;
@@ -117,9 +126,18 @@ class Category
     }
 
     #[ORM\PrePersist]
-    public function setCreatedAtValue(): void
+    public function setCreatedAt(): void
     {
         $this->created_at = new \DateTimeImmutable();
         $this->setUpdatedAtValue();
+    }
+
+    #[ORM\PrePersist]
+    public function setSlugValue(): void
+    {
+        $slugger = new AsciiSlugger();
+        $slug = $slugger->slug($this->getName());
+
+        $this->slug = $slug;
     }
 }
