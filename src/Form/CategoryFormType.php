@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Category;
+use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\Criteria;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -13,24 +15,30 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CategoryFormType extends AbstractType
 {
+    public function __construct(protected CategoryRepository $categoryRepository)
+    {
+    }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $criteria = Criteria::create()->where(Criteria::expr()->isNull('parent_id'));
+        $categories = $this->categoryRepository->matching($criteria)->getValues();
+        $choices = [];
+        foreach ($categories as $category) {
+            $choices[$category->getName()] = $category->getId();
+        }
+
         $builder
             ->add('name', TextType::class, [
                 'label' => 'نام',
             ])
             ->add('parent_id', ChoiceType::class, [
                 'label' => 'انتخاب دسته پدر',
-                'choices' => [
-                    'example_data_1' => 1,
-                    'example_data_2' => 2,
-                    'example_data_3' => 3,
-                ],
+                'choices' => $choices,
                 'attr' => [
                     'class' => 'form-control',
                 ]
             ])
-            ->add('description', TextareaType::class , [
+            ->add('description', TextareaType::class, [
                 'label' => 'توضیحات'
             ])
             ->add('submit', SubmitType::class, [
