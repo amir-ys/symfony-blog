@@ -31,7 +31,7 @@ class Category
     #[ORM\Column(nullable: true)]
     private ?int $parent_id = null;
 
-    #[ORM\Column(name: 'status' , type : Types::INTEGER , length: 2 , nullable: false , enumType: CategoryStatusEnum::class)]
+    #[ORM\Column(name: 'status', type: Types::INTEGER, length: 2, nullable: false, enumType: CategoryStatusEnum::class)]
     private CategoryStatusEnum $status;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -88,6 +88,7 @@ class Category
 
         return $this;
     }
+
     public function getStatus(): ?CategoryStatusEnum
     {
         return $this->status;
@@ -97,6 +98,7 @@ class Category
     {
         $this->status = $status;
     }
+
     public function getLogo(): ?string
     {
         return $this->logo;
