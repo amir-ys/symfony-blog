@@ -3,10 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Category;
+use App\Enum\CategoryStatusEnum;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\Criteria;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,11 +20,12 @@ class CategoryFormType extends AbstractType
     public function __construct(protected CategoryRepository $categoryRepository)
     {
     }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $criteria = Criteria::create()->where(Criteria::expr()->isNull('parent_id'));
         $categories = $this->categoryRepository->matching($criteria)->getValues();
-        $choices = [];
+        $choices = ['بدون دسته پدر' => null];
         foreach ($categories as $category) {
             $choices[$category->getName()] = $category->getId();
         }
@@ -30,6 +33,13 @@ class CategoryFormType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'نام',
+            ])
+            ->add('status', EnumType::class, [
+                'class' => CategoryStatusEnum::class,
+                'label' => 'انتخاب وضعیت',
+                'attr' => [
+                    'class' => 'form-control',
+                ]
             ])
             ->add('parent_id', ChoiceType::class, [
                 'label' => 'انتخاب دسته پدر',
@@ -39,7 +49,8 @@ class CategoryFormType extends AbstractType
                 ]
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'توضیحات'
+                'label' => 'توضیحات',
+                'required' => false
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'ثبت',

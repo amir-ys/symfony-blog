@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\CategoryStatusEnum;
 use App\Repository\CategoryRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -29,6 +30,9 @@ class Category
 
     #[ORM\Column(nullable: true)]
     private ?int $parent_id = null;
+
+    #[ORM\Column(name: 'status' , type : Types::INTEGER , length: 2 , nullable: false , enumType: CategoryStatusEnum::class)]
+    private CategoryStatusEnum $status;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $logo = null;
@@ -84,7 +88,15 @@ class Category
 
         return $this;
     }
+    public function getStatus(): ?CategoryStatusEnum
+    {
+        return $this->status;
+    }
 
+    public function setStatus(?CategoryStatusEnum $status): void
+    {
+        $this->status = $status;
+    }
     public function getLogo(): ?string
     {
         return $this->logo;
