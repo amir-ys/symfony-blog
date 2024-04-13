@@ -36,7 +36,7 @@
                                 <td>{{ category.getId }}</td>
                                 <td>{{ category.getName }}</td>
                                 {#  todo get parent category name#}
-                                <td>{{ category.getParentId }}</td>
+                                <td>{{ category.getParent.getName ?? '-' }}</td>
                                 <td>{{ category.getLogo ?? '-' }}</td>
                                 <td>{{ category.getCreatedAt.format('Y-m-d H:i:s') }}</td>
                                 <td>

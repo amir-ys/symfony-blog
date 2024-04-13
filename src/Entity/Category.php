@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Enum\CategoryStatusEnum;
 use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\String\Slugger\AsciiSlugger;
@@ -14,6 +16,7 @@ class Category
 {
     public function __construct()
     {
+        $this->children = new ArrayCollection();
         $this->setCreatedAt();
     }
 
@@ -28,9 +31,11 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $parent_id = null;
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy : 'parent_id')]
+    private Category|null $parent = null;
 
+    #[ORM\OneToMany(targetEntity: Category::class , mappedBy: 'parent_id')]
+    private Collection $children;
     #[ORM\Column(name: 'status', type: Types::INTEGER, length: 2, nullable: false, enumType: CategoryStatusEnum::class)]
     private CategoryStatusEnum $status;
 
@@ -76,19 +81,6 @@ class Category
 
         return $this;
     }
-
-    public function getParentId(): ?int
-    {
-        return $this->parent_id;
-    }
-
-    public function setParentId(?int $parent_id): static
-    {
-        $this->parent_id = $parent_id;
-
-        return $this;
-    }
-
     public function getStatus(): ?CategoryStatusEnum
     {
         return $this->status;
@@ -153,5 +145,25 @@ class Category
         $slug = $slugger->slug($this->getName());
 
         $this->slug = $slug;
+    }
+
+    public function getChildren(): Collection
+    {
+        return $this->children;
+    }
+
+    public function setChildren(Collection $children): void
+    {
+        $this->children = $children;
+    }
+
+    public function getParent(): ?Category
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?Category $parent): void
+    {
+        $this->parent = $parent;
     }
 }
