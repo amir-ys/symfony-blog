@@ -33,12 +33,32 @@ class CategoryController extends AbstractController
             $entityManager->persist($category);
             $entityManager->flush();
 
-            $this->addFlash('success' , 'دسته بندی با موفقیت ایجاد شد.');
+            $this->addFlash('success', 'دسته بندی با موفقیت ایجاد شد.');
             return $this->redirectToRoute('panel.categories.index');
         }
 
         return $this->render('category/new.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/categories/{id}/edit', name: 'panel.categories.edit')]
+    public function edit(Category $category, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(CategoryFormType::class, $category);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($category);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'دسته بندی با موفقیت بروزرسانی شد.');
+            return $this->redirectToRoute('panel.categories.index');
+        }
+
+        return $this->render('category/edit.html.twig', [
+            'form' => $form->createView(),
+            'category' => $category
         ]);
     }
 }

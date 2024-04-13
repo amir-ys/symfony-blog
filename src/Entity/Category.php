@@ -31,10 +31,13 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
-    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy : 'parent_id')]
+    #[ORM\Column(nullable: true)]
+    private ?int $parent_id = null;
+
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'parent_id')]
     private Category|null $parent = null;
 
-    #[ORM\OneToMany(targetEntity: Category::class , mappedBy: 'parent_id')]
+    #[ORM\OneToMany(targetEntity: Category::class, mappedBy: 'parent_id')]
     private Collection $children;
     #[ORM\Column(name: 'status', type: Types::INTEGER, length: 2, nullable: false, enumType: CategoryStatusEnum::class)]
     private CategoryStatusEnum $status;
@@ -81,6 +84,7 @@ class Category
 
         return $this;
     }
+
     public function getStatus(): ?CategoryStatusEnum
     {
         return $this->status;
@@ -165,5 +169,15 @@ class Category
     public function setParent(?Category $parent): void
     {
         $this->parent = $parent;
+    }
+
+    public function getParentId(): ?int
+    {
+        return $this->parent_id;
+    }
+
+    public function setParentId(?int $parent_id): void
+    {
+        $this->parent_id = $parent_id;
     }
 }

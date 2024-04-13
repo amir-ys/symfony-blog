@@ -32,22 +32,28 @@
                             </thead>
                             <tbody>
                             {% for category in categories %}
-                            <tr>
-                                <td>{{ category.getId }}</td>
-                                <td>{{ category.getName }}</td>
-                                {#  todo get parent category name#}
-                                <td>{{ category.getParent.getName ?? '-' }}</td>
-                                <td>{{ category.getLogo ?? '-' }}</td>
-                                <td>{{ category.getCreatedAt.format('Y-m-d H:i:s') }}</td>
-                                <td>
+                                <tr>
+                                    <td>{{ category.getId }}</td>
+                                    <td>{{ category.getName }}</td>
+                                    {#  todo get parent category name #}
+                                    <td>{{ category.getParent.getName ?? '-' }}</td>
+                                    <td>{{ category.getLogo ?? '-' }}</td>
+                                    <td>{{ category.getCreatedAt.format('Y-m-d H:i:s') }}</td>
+                                    <td>
                                     <span class="badge badge-{{ category.getStatus.getCssClass }}">
                                         {{ category.getStatus.getDisplayName }}
                                     </span>
-                                </td>
-                                <td>
-                                    ---
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-sm bg-transparent d-inline"
+                                           href="{{ path('panel.categories.edit' , {id : category.id}) }}"><i
+                                                class="fa fa-pencil fa-15m text-success"></i></a>
+
+                                        {#                                        <a href="{{ route('panel.categories.delete' , category.id) }}" #}
+                                        {#                                           class="btn btn-sm bg-transparent d-inline delete-confirm"><i #}
+                                        {#                                                class="fa fa-trash fa-15m text-danger"></i></a> #}
+                                    </td>
+                                </tr>
                             {% endfor %}
                             </tbody>
                         </table>
