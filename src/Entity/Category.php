@@ -34,10 +34,10 @@ class Category
     #[ORM\Column(nullable: true)]
     private ?int $parent_id = null;
 
-    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'parent_id')]
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'children')]
+    #[ORM\JoinColumn(name: "parent_id", referencedColumnName: "id", nullable: true)]
     private Category|null $parent = null;
-
-    #[ORM\OneToMany(targetEntity: Category::class, mappedBy: 'parent_id')]
+    #[ORM\OneToMany(targetEntity: Category::class, mappedBy: 'parent')]
     private Collection $children;
     #[ORM\Column(name: 'status', type: Types::INTEGER, length: 2, nullable: false, enumType: CategoryStatusEnum::class)]
     private CategoryStatusEnum $status;

@@ -65,6 +65,10 @@ class CategoryController extends AbstractController
     #[Route('/categories/{id}', name: 'panel.categories.delete')]
     public function delete(Category $category, EntityManagerInterface $entityManager): Response
     {
+        foreach ($category->getChildren() as $child) {
+            $entityManager->remove($child);
+        }
+
         $entityManager->remove($category);
         $entityManager->flush();
 
