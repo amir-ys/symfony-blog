@@ -49,9 +49,17 @@
                                            href="{{ path('panel.categories.edit' , {id : category.id}) }}"><i
                                                 class="fa fa-pencil fa-15m text-success"></i></a>
 
-                                        {#                                        <a href="{{ route('panel.categories.delete' , category.id) }}" #}
-                                        {#                                           class="btn btn-sm bg-transparent d-inline delete-confirm"><i #}
-                                        {#                                                class="fa fa-trash fa-15m text-danger"></i></a> #}
+                                        <a href="{{ path('panel.categories.delete' , { id: category.id}) }}"
+                                           onclick="deleteCategory('{{ category.id }}')"
+                                           class="btn btn-sm bg-transparent d-inline delete-confirm"><i
+                                                class="fa fa-trash fa-15m text-danger"></i>
+                                        </a>
+
+                                        <form action="{{ path('panel.categories.delete' , { id: category.id}) }}"
+                                              method="post"
+                                              id="delete_category_{{ category.id }}"
+                                        >
+                                        </form>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -62,4 +70,12 @@
             </div>
         </div>
     </div>
+    <script>
+        function deleteCategory(id) {
+            event.preventDefault()
+            if (confirm('آیا از انجام این  کار اطمینان دارید؟')){
+                $('#delete_category_' + id).submit()
+            }
+        }
+    </script>
 {% endblock %}
