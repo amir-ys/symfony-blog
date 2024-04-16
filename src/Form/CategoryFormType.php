@@ -23,7 +23,10 @@ class CategoryFormType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $criteria = Criteria::create()->where(Criteria::expr()->isNull('parent_id'));
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->isNull('parent_id'))
+            ->andWhere(Criteria::expr()->neq('id', $options['data']->getId()));
+
         $categories = $this->categoryRepository->matching($criteria)->getValues();
         $choices = ['بدون دسته پدر' => null];
         foreach ($categories as $category) {
