@@ -1,0 +1,13 @@
+<div>
+    <h3>
+        {{ title }}
+    </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('dashboard') }}">داشبورد</a></li>
+            {% block breadcrumb %}
+                {{ breadcrumb|raw }}
+            {% endblock %}
+        </ol>
+    </nav>
+</div>
