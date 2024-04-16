@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Form\CategoryFormType;
+use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,13 +23,20 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/categories/new', name: 'panel.categories.new')]
-    public function new(Request $request, EntityManagerInterface $entityManager)
+    public function new(Request $request, EntityManagerInterface $entityManager, FileUploader $fileUploader)
     {
         $category = new Category();
         $form = $this->createForm(CategoryFormType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $logoFile = $form->get('logo')->getData();
+            if ($logoFile) {
+                $logoFileName = $fileUploader->upload($logoFile);
+                $category->setLogo($logoFileName);
+            }
+
             $category->setSlug($category->getName());
             $entityManager->persist($category);
             $entityManager->flush();
@@ -43,12 +51,26 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/categories/{id}/edit', name: 'panel.categories.edit')]
-    public function edit(Category $category, Request $request, EntityManagerInterface $entityManager): Response
+    public function edit(
+        Category               $category,
+        Request                $request,
+        EntityManagerInterface $entityManager,
+        FileUploader           $fileUploader
+    ): Response
     {
         $form = $this->createForm(CategoryFormType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $logoFile = $form->get('logo')->getData();
+            if ($logoFile) {
+                $fileUploader->removePreviousUpload($category->getLogo());
+                $logoFileName = $fileUploader->upload($logoFile);
+                $category->setLogo($logoFileName);
+                $category->setLogo($logoFileName);
+            }
+
             $entityManager->persist($category);
             $entityManager->flush();
 
