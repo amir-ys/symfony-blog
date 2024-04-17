@@ -3,6 +3,7 @@
 namespace App\Controller\Auth;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -19,8 +20,9 @@ class LoginController extends AbstractController
     }
 
     #[Route(path: '/logout', name: 'auth.logout')]
-    public function logout(): void
+    public function logout(Security $security)
     {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        $security->logout(false);
+        return $this->render('auth/login.html.twig');
     }
 }
