@@ -18,6 +18,7 @@ class Category
     {
         $this->children = new ArrayCollection();
         $this->setCreatedAt();
+        $this->posts = new ArrayCollection();
     }
 
     #[ORM\Id]
@@ -53,6 +54,9 @@ class Category
 
     #[ORM\Column(nullable: true, options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeImmutable $created_at = null;
+
+    #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'category', orphanRemoval: true)]
+    private Collection $posts;
 
     public function getId(): ?int
     {
@@ -179,5 +183,34 @@ class Category
     public function setParentId(?int $parent_id): void
     {
         $this->parent_id = $parent_id;
+    }
+
+    /**
+     * @return Collection<int, Post>
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Post $post): static
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts->add($post);
+        }
+
+        return $this;
+    }
+
+    public function removePost(Post $post): static
+    {
+        if ($this->posts->removeElement($post)) {
+            // set the owning side to null (unless already changed)
+            if ($post->getAuthor() === $this) {
+                $post->setAuthor(null);
+            }
+        }
+
+        return $this;
     }
 }
