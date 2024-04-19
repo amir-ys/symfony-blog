@@ -27,7 +27,7 @@ class Post
     private ?string $content = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $string = null;
+    private ?string $image = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $status = null;
