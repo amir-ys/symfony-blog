@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\PostRepository;
+use App\Trait\TimestampableEntity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Table('posts')]
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
 {
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -102,18 +106,6 @@ class Post
         return $this;
     }
 
-    public function getString(): ?string
-    {
-        return $this->string;
-    }
-
-    public function setString(string $string): static
-    {
-        $this->string = $string;
-
-        return $this;
-    }
-
     public function getStatus(): ?int
     {
         return $this->status;
@@ -180,5 +172,15 @@ class Post
     public function setAuthor(?User $author): void
     {
         $this->author = $author;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): void
+    {
+        $this->image = $image;
     }
 }
