@@ -1,16 +1,16 @@
-{% extends './layouts/main.html.twig' %}
-{% block title %}پست ها{% endblock %}
+{% extends '/layouts/main.html.twig' %}
+{% block title %}مقالات{% endblock %}
 {% block breadcrumb %}
-    <li class="breadcrumb-item active"><a>پست ها</a></li>
+    <li class="breadcrumb-item active">مقالات</li>
 {% endblock %}
 {% block content %}
     <div class="row">
         <div class="col-lg-12">
             <div class="row mb-3">
                 <div class="col-sm-12 col-md-12 col-lg-2">
-                    <a href="{{ path('panel.categories.new') }}"
+                    <a href="{{ path('panel.posts.new') }}"
                        class="btn btn-primary btn-rounded waves-effect waves-light mb-2 me-2">
-                        ایجاد دسته بندی
+                        ایجاد مقاله جدید
                         <i class="mdi mdi-plus me-1"></i>
                     </a>
                 </div>
