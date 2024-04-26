@@ -25,7 +25,7 @@ class Post
     private ?string $slug = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $summery = null;
+    private ?string $summary = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
@@ -37,10 +37,10 @@ class Post
     private ?int $status = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
-    private ?int $is_commentable = null;
+    private ?int $isCommentable = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $published_at = null;
+    private ?\DateTimeInterface $publishedAt = null;
 
     #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
@@ -51,7 +51,7 @@ class Post
     private ?Category $category = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
-    private ?int $view_count = null;
+    private ?int $viewCount = null;
 
     public function getId(): ?int
     {
@@ -82,14 +82,14 @@ class Post
         return $this;
     }
 
-    public function getSummery(): ?string
+    public function getSummary(): ?string
     {
-        return $this->summery;
+        return $this->summary;
     }
 
-    public function setSummery(?string $summery): static
+    public function setSummary(?string $summary): static
     {
-        $this->summery = $summery;
+        $this->summary = $summary;
 
         return $this;
     }
@@ -118,38 +118,38 @@ class Post
         return $this;
     }
 
-    public function getIsCommentable(): ?int
+    public function isCommentable(): ?int
     {
-        return $this->is_commentable;
+        return $this->isCommentable;
     }
 
-    public function setIsCommentable(int $is_commentable): static
+    public function setIsCommentable(int $isCommentable): static
     {
-        $this->is_commentable = $is_commentable;
+        $this->isCommentable = $isCommentable;
 
         return $this;
     }
 
     public function getPublishedAt(): ?\DateTimeInterface
     {
-        return $this->published_at;
+        return $this->publishedAt;
     }
 
-    public function setPublishedAt(?\DateTimeInterface $published_at): static
+    public function setPublishedAt(?\DateTimeInterface $publishedAt): static
     {
-        $this->published_at = $published_at;
+        $this->publishedAt = $publishedAt;
 
         return $this;
     }
 
     public function getViewCount(): ?int
     {
-        return $this->view_count;
+        return $this->viewCount;
     }
 
-    public function setViewCount(int $view_count): static
+    public function setViewCount(int $viewCount): static
     {
-        $this->view_count = $view_count;
+        $this->viewCount = $viewCount;
 
         return $this;
     }
