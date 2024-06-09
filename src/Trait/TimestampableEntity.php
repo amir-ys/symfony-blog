@@ -27,8 +27,16 @@ Trait TimestampableEntity
         return $this->created_at;
     }
 
-    public function setCreatedAt(?\DateTimeImmutable $created_at): void
+    #[ORM\PreUpdate]
+    public function setUpdatedAtValue(): void
     {
-        $this->created_at = $created_at;
+        $this->updated_at = new \DateTimeImmutable();
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAt(): void
+    {
+        $this->created_at = new \DateTimeImmutable();
+        $this->setUpdatedAtValue();
     }
 }

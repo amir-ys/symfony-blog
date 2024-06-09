@@ -19,8 +19,8 @@ class Category
     public function __construct()
     {
         $this->children = new ArrayCollection();
-        $this->setCreatedAt();
         $this->posts = new ArrayCollection();
+        $this->setCreatedAt();
     }
 
     #[ORM\Id]
@@ -124,29 +124,6 @@ class Category
 
         return $this;
     }
-
-//    public function getUpdatedAt(): ?\DateTimeImmutable
-//    {
-//        return $this->updated_at;
-//    }
-//
-//    #[ORM\PreUpdate]
-//    public function setUpdatedAtValue(): void
-//    {
-//        $this->updated_at = new \DateTimeImmutable();
-//    }
-//
-//    public function getCreatedAt(): ?\DateTimeImmutable
-//    {
-//        return $this->created_at;
-//    }
-//
-//    #[ORM\PrePersist]
-//    public function setCreatedAt(): void
-//    {
-//        $this->created_at = new \DateTimeImmutable();
-//        $this->setUpdatedAtValue();
-//    }
 
     #[ORM\PrePersist]
     public function setSlugValue(): void
