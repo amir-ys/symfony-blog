@@ -33,6 +33,9 @@ class PostFormType extends AbstractType
             ->add('summary', TextareaType::class, [
                 'label' => 'خلاصه',
             ])
+            ->add('content', TextareaType::class, [
+                'label' => 'محتوا',
+            ])
             ->add('submit', SubmitType::class, [
                 'label' => 'ثبت',
                 'attr' => [
