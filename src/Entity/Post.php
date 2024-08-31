@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PostRepository;
-use App\Trait\TimestampableEntity;
+use App\Trait\HasTimestampEntity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
 {
-    use TimestampableEntity;
+    use HasTimestampEntity;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

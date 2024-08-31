@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Enum\CategoryStatusEnum;
 use App\Repository\CategoryRepository;
-use App\Trait\TimestampableEntity;
+use App\Trait\HasTimestampEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -13,14 +13,14 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ORM\Table(name: 'categories')]
+#[ORM\HasLifecycleCallbacks]
 class Category
 {
-    use TimestampableEntity;
+    use HasTimestampEntity;
     public function __construct()
     {
         $this->children = new ArrayCollection();
         $this->posts = new ArrayCollection();
-        $this->setCreatedAt();
     }
 
     #[ORM\Id]
@@ -124,6 +124,29 @@ class Category
 
         return $this;
     }
+
+//    public function getUpdatedAt(): ?\DateTimeImmutable
+//    {
+//        return $this->updated_at;
+//    }
+//
+//    #[ORM\PreUpdate]
+//    public function setUpdatedAtValue(): void
+//    {
+//        $this->updated_at = new \DateTimeImmutable();
+//    }
+//
+//    public function getCreatedAt(): ?\DateTimeImmutable
+//    {
+//        return $this->created_at;
+//    }
+//
+//    #[ORM\PrePersist]
+//    public function setCreatedAt(): void
+//    {
+//        $this->created_at = new \DateTimeImmutable();
+//        $this->setUpdatedAtValue();
+//    }
 
     #[ORM\PrePersist]
     public function setSlugValue(): void

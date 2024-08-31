@@ -2,15 +2,26 @@
 
 namespace App\Trait;
 
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
-Trait TimestampableEntity
+trait HasTimestampEntity
 {
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updated_at = null;
 
     #[ORM\Column(nullable: true, options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeImmutable $created_at = null;
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function updateTimestamps(): void
+    {
+        $this->setUpdatedAt(new DateTimeImmutable());
+        if ($this->getCreatedAt() == null) {
+            $this->setCreatedAt(new DateTimeImmutable());
+        }
+    }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
